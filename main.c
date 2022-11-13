@@ -9,19 +9,19 @@ int main(void)
 {
 	size_t n = 10, k;
 	char *new = malloc(sizeof(char) * n);
-	char **arg, *args, *cmd, d[] = " ";
+	char **arg, *args, d[] = " ";
 	int i, counter = 1;
 
 	if (new == NULL)
 		return (1);
-	printf("$ ");
+	printf("#cisfun$ ");
 	getline(&new, &n, stdin);
 	k = strlen(new);
 	new[k - 1] = '\0';
-	cmd = _strcat("/bin/", new);
-	for (i = 0; cmd[i] != '\0'; i++)
+	/* cmd = _strcat("/bin/", new); */
+	for (i = 0; new[i] != '\0'; i++)
 	{
-		if (cmd[i] == ' ')
+		if (new[i] == ' ')
 			counter++;
 	}
 	arg = malloc(sizeof(char *) * counter);
@@ -34,7 +34,7 @@ int main(void)
 			exit(1);
 	}
 	i = 0;
-	args = strtok(cmd, d);
+	args = strtok(new, d);
 	while (args != NULL)
 	{
 		arg[i] = args;
