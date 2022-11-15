@@ -11,5 +11,6 @@
 #include <sys/wait.h>
 
 char *_strcat(char *a, char *b);
+int _strcmp(char *str1, char *str2);
 
 #endif
