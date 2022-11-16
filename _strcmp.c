@@ -1,5 +1,13 @@
 #include "main.h"
 
+/**
+ * _strcmp - check main
+ * Description: a function that compares two strings
+ * @str1: a pointer to a string
+ * @str2: a pointer to a string
+ * Return: returns 0 (succeeds) or 1 if it fails.
+ */
+
 int _strcmp(char *str1, char *str2)
 {
 	int i, len, counter = 0;

@@ -10,6 +10,8 @@
 #include <unistd.h>
 #include <sys/wait.h>
 
+extern char **environ;
+
 char *_strcat(char *a, char *b);
 int _strcmp(char *str1, char *str2);
 

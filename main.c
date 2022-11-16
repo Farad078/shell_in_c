@@ -5,13 +5,9 @@ void exe(char **a, char **b, char *c);
 
 /**
  * main - main program
- * @argc: input parameter of type int
- * @argv: a pointer to array
- * @env: a pointer to array
  * Return: always return 0
  */
- 
- extern char **environ;
+
 int main(void)
 {
 	size_t n = 10, k;
