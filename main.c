@@ -80,7 +80,7 @@ void exe(char **a, char **b, char *c)
 			f = fork();
 			if (f == 0)
 			{
-				if (execve(a[0], a, NULL) == -1)
+				if (execve(a[0], a, b) == -1)
 					perror("Error: ");
 			}
 			else
