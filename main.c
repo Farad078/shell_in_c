@@ -10,7 +10,9 @@ void exe(char **a, char **b, char *c);
  * @env: a pointer to array
  * Return: always return 0
  */
-int main(int argc, char *argv[], char *env[])
+ 
+ extern char **environ;
+int main(void)
 {
 	size_t n = 10, k;
 	char *new = malloc(sizeof(char) * n);
@@ -18,7 +20,6 @@ int main(int argc, char *argv[], char *env[])
 	char *cmd;
 	int i, counter = 1;
 	char *jst_exit = "/bin/exit";
-	int j;
 
 	if (new == NULL)
 		return (1);
@@ -54,7 +55,7 @@ int main(int argc, char *argv[], char *env[])
 			i++;
 		}
 		arg[i] = NULL;
-		exe(arg, env, jst_exit);
+		exe(arg, environ, jst_exit);
 
 	}
 	return (0);
