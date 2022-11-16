@@ -1,6 +1,13 @@
 #include "main.h"
+
+/* function prototype */
+void exe(char **a, char **b, char *c);
+
 /**
  * main - main program
+ * @argc: input parameter of type int
+ * @argv: a pointer to array
+ * @env: a pointer to array
  * Return: always return 0
  */
 int main(int argc, char *argv[], char *env[])
@@ -10,7 +17,6 @@ int main(int argc, char *argv[], char *env[])
 	char **arg, *args, d[] = " ";
 	char *cmd;
 	int i, counter = 1;
-	pid_t f;
 	char *jst_exit = "/bin/exit";
 	int j;
 
@@ -48,27 +54,44 @@ int main(int argc, char *argv[], char *env[])
 			i++;
 		}
 		arg[i] = NULL;
-		j = _strcmp(arg[0], jst_exit);
-		if (_strcmp(arg[0], "/bin/env") != 0)
-			if (j == 1)
-			{
-				f = fork();
-				if (f == 0)
-				{
-					if (execve(arg[0], arg, NULL) == -1)
-						perror("Error: ");
-				}
-				else
-					wait(NULL);
-			}
-			else
-				exit(0);
-		else
-			while (*env != NULL)
-			{
-				printf("%s\n", *env);
-				env++;
-			}
+		exe(arg, env, jst_exit);
+
 	}
 	return (0);
+}
+
+/**
+* exe - check main
+* Description: a function that executes the execve program
+* @a: a pointer to array of characters
+* @b: a pointer to array of characters
+* @c: a pointer to character
+* Return: Nothing
+*/
+void exe(char **a, char **b, char *c)
+{
+	int j;
+	pid_t f;
+
+	j = _strcmp(a[0], c);
+	if (_strcmp(a[0], "/bin/env") != 0)
+		if (j == 1)
+		{
+			f = fork();
+			if (f == 0)
+			{
+				if (execve(a[0], a, NULL) == -1)
+					perror("Error: ");
+			}
+			else
+				wait(NULL);
+		}
+		else
+			exit(0);
+	else
+		while (*b != NULL)
+		{
+			printf("%s\n", *b);
+			b++;
+		}
 }
