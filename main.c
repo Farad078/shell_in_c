@@ -2,6 +2,7 @@
 
 /* function prototype */
 void exe(char **a, char **b, char *c);
+void exem(char **a, char **b);
 
 /**
  * main - main program
@@ -12,13 +13,15 @@ int main(void)
 {
 	size_t n = 10, k;
 	char *new = malloc(sizeof(char) * n);
-	char **arg, *args, d[] = " ";
-	char *cmd;
+	char **arg; /* *args, d[] = " "; */
+	/* char *cmd; */
 	int i, counter = 1;
-	char *jst_exit = "/bin/exit";
+	pid_t f;
+	/*char *jst_exit = "/bin/exit";*/
 
 	if (new == NULL)
 		return (1);
+
 	while (true)
 	{
 		printf("#cisfun$ ");
@@ -33,7 +36,7 @@ int main(void)
 		arg = malloc(sizeof(char *) * counter);
 		if (arg == NULL)
 		{
-			return (2);
+			exit(1);
 		}
 		for (i = 0; i <= counter; i++)
 		{
@@ -41,17 +44,27 @@ int main(void)
 			if (arg[i] == NULL)
 				exit(1);
 		}
-		i = 0;
-		cmd = _strcat("/bin/", new);
-		args = strtok(cmd, d);
-		while (args != NULL)
-		{
-			arg[i] = args;
-			args = strtok(NULL, d);
-			i++;
-		}
-		arg[i] = NULL;
-		exe(arg, environ, jst_exit);
+		/*
+		*i = 0;
+		*cmd = _strcat("/bin/", new);
+		*args = strtok(new, d);
+		*while (args != NULL)
+		*{
+		*	arg[i] = args;
+		*	args = strtok(NULL, d);
+		*	i++;
+		*}
+		*arg[i] = NULL;
+		*/
+		arg[0] = new;
+		arg[1] = NULL;
+
+		/* fork creation */
+		f = fork();
+		if (f == 0)
+			exem(arg, environ);
+		else
+			wait(NULL);
 
 	}
 	return (0);
@@ -69,6 +82,7 @@ void exe(char **a, char **b, char *c)
 {
 	int j;
 	pid_t f;
+	char *array[] = {NULL};
 
 	j = _strcmp(a[0], c);
 	if (_strcmp(a[0], "/bin/env") != 0)
@@ -77,7 +91,7 @@ void exe(char **a, char **b, char *c)
 			f = fork();
 			if (f == 0)
 			{
-				if (execve(a[0], a, b) == -1)
+				if (execve(a[0], array, b) == -1)
 					perror("Error: ");
 			}
 			else
@@ -91,4 +105,20 @@ void exe(char **a, char **b, char *c)
 			printf("%s\n", *b);
 			b++;
 		}
+}
+
+
+/**
+* exem - check main
+* Description: a function that executes the execve program
+* @a: a pointer to array of characters
+* @b: a pointer to array of characters
+* Return: Nothing
+*/
+void exem(char **a, char **b)
+{
+	char *array[] = {NULL};
+
+	if (execve(a[0], array, b) == -1)
+		perror("./shell");
 }
