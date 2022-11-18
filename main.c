@@ -63,8 +63,12 @@ int main(void)
 		f = fork();
 		if (f == 0)
 			exem(arg, environ);
+
 		else
+		{
 			wait(NULL);
+			exit(0);
+		}
 
 	}
 	return (0);
